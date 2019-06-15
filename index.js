@@ -18,3 +18,12 @@ mongoose.connect(
 /* MODELS */
 
 const User = require("./models/user-model");
+
+/* ROUTES */
+
+const userRoutes = require("./routes/user-routes");
+app.use(userRoutes);
+
+app.listen(process.env.PORT || 3001, () => {
+  console.log("Server started");
+});

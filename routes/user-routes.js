@@ -13,6 +13,10 @@ const nodemailer = require("nodemailer");
 router.post("/user/create", async (req, res) => {
   try {
     if (req.body) {
+      const checkUser = await User.findOne({ email: req.body.email });
+      if (checkUser) {
+        return res.status(400).json("This email is already used");
+      }
       const salt = uid2(16);
       const user = await new User({
         email: req.body.email,
@@ -44,10 +48,11 @@ router.post("/user/create", async (req, res) => {
           req.body.password +
           "<br/> <br/> Have fun. <br/> <br/>Nam</p>"
       });
+      return res.status(200).json(user.token);
     }
     return res.status(400).json("Bad request");
   } catch (error) {
-    return res.statusCode(400).json("Bad request");
+    return res.status(400).json("Bad request");
   }
 });
 
