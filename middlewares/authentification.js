@@ -7,7 +7,7 @@ authentification = async (req, res, next) => {
         token: req.headers.authorization.replace("Bearer ", "")
       });
       if (!user) {
-        return res.status(400).json("Bad request");
+        return res.status(401).json("Unauthorized");
       }
       req.user = user;
       return next();

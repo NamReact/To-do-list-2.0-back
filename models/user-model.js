@@ -7,7 +7,8 @@ const User = mongoose.model("User", {
   token: String,
   temporaryToken: String,
   salt: String,
-  hash: String
+  hash: String,
+  forgotPasswordToken: String
 });
 
 module.exports = User;
