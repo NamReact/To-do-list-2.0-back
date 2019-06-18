@@ -18,11 +18,15 @@ mongoose.connect(
 /* MODELS */
 
 const User = require("./models/user-model");
+const Agenda = require("./models/agenda-model");
 
 /* ROUTES */
 
 const userRoutes = require("./routes/user-routes");
 app.use(userRoutes);
+
+const agendaRoutes = require("./routes/agenda-routes");
+app.use(agendaRoutes);
 
 app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");

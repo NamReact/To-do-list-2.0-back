@@ -4,7 +4,6 @@ const uid2 = require("uid2");
 const sha256 = require("js-sha256");
 
 const User = require("../models/user-model");
-const authentification = require("../middlewares/authentification");
 
 const nodemailer = require("nodemailer");
 

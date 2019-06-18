@@ -3,7 +3,7 @@ const User = require("../models/user-model");
 authentification = async (req, res, next) => {
   try {
     if (req.headers.authorization) {
-      const user = await user.findOne({
+      const user = await User.findOne({
         token: req.headers.authorization.replace("Bearer ", "")
       });
       if (!user) {
