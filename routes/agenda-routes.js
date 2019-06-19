@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user-model");
 const Agenda = require("../models/agenda-model");
 
 const authentification = require("../middlewares/authentification");
@@ -45,7 +44,7 @@ router.post("/agenda/create", authentification, async (req, res) => {
       };
       agenda.pages.push(newPage);
       await agenda.save();
-      return res.json(200).json(agenda);
+      return res.status(200).json(agenda);
     }
   } catch (error) {
     return res.status(400).json("Bad request");

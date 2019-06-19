@@ -4,6 +4,7 @@ const uid2 = require("uid2");
 const sha256 = require("js-sha256");
 
 const User = require("../models/user-model");
+const authentification = require("../middlewares/authentification");
 
 const nodemailer = require("nodemailer");
 
@@ -52,6 +53,91 @@ router.post("/user/create", async (req, res) => {
       }
     }
     return res.status(400).json("Bad request");
+  } catch (error) {
+    return res.status(400).json("Bad request");
+  }
+});
+
+/* GET */
+
+router.get("/user", authentification, (req, res) => {
+  try {
+    const userReturn = {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email
+    };
+    return res.status(200).json(userReturn);
+  } catch (error) {
+    return res.status(400).json("Bad request");
+  }
+});
+
+/* UPDATE */
+
+router.post("/user/update", authentification, async (req, res) => {
+  try {
+    if (req.body) {
+      const { firstName, lastName, email } = req.body;
+      const { user } = req;
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.email = email;
+      await user.save();
+      const userReturn = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      };
+      return res.status(200);
+    }
+  } catch (error) {
+    return res.status(400).json("Bad request");
+  }
+});
+
+/* Password change */
+
+router.post("/user/change-password", authentification, async (req, res) => {
+  try {
+    if (req.body) {
+      const { user } = req;
+      const { currentPassword, newPassword } = req.body;
+
+      const loginHash = sha256(currentPassword + user.salt);
+      if (loginHash === user.hash) {
+        const salt = uid2(16);
+        const token = uid2(16);
+        user.salt = salt;
+        user.token = token;
+        user.hash = sha256(newPassword + salt);
+        await user.save();
+        res.status(200).json("Password changed");
+
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: "noreply.nam.todolist@gmail.com",
+            pass: "Noreplytodolist2"
+          }
+        });
+        let info = await transporter.sendMail({
+          from: '"Nam" <noreply.nam.todolist@gmail.com>',
+          to: user.email,
+          subject: "Password changed",
+          text:
+            "Hey ! Your password has successfully been changed. If you did not request a new password, please contact me.",
+          html:
+            "<p>Hey ! Your password has successfully been changed. If you did not request a new password, please contact me. <br/><br/>Here is your new password : <br/><br/>" +
+            req.body.newPassword +
+            "<br/><br/>Nam</p>"
+        });
+        return;
+      }
+      return res.status(401).json("Unauthorized");
+    }
   } catch (error) {
     return res.status(400).json("Bad request");
   }
