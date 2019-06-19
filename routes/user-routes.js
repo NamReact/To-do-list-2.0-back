@@ -247,4 +247,16 @@ router.post("/user/reset-password", async (req, res) => {
   }
 });
 
+/* DELETE */
+
+router.post("/user/delete", authentification, async (req, res) => {
+  try {
+    const { user } = req;
+    await user.remove();
+    return res.status(200);
+  } catch (error) {
+    return res.status(400).json("Bad request");
+  }
+});
+
 module.exports = router;
