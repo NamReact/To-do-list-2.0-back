@@ -57,7 +57,7 @@ router.get("/agenda", authentification, async (req, res) => {
   try {
     const agenda = await Agenda.findOne({ userId: req.user._id });
     if (!agenda) {
-      return res.status(404);
+      return res.status(202);
     }
     return res.status(200).json(agenda);
   } catch (error) {
