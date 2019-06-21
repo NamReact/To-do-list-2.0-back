@@ -34,7 +34,7 @@ router.post("/user/create", async (req, res) => {
           secure: true,
           auth: {
             user: "noreply.nam.todolist@gmail.com",
-            pass: "Noreplytodolist2"
+            pass: process.env.NOREPLY_PASSWORD
           }
         });
         let info = await transporter.sendMail({
@@ -120,7 +120,7 @@ router.post("/user/change-password", authentification, async (req, res) => {
           secure: true,
           auth: {
             user: "noreply.nam.todolist@gmail.com",
-            pass: "Noreplytodolist2"
+            pass: process.env.NOREPLY_PASSWORD
           }
         });
         let info = await transporter.sendMail({
@@ -182,7 +182,7 @@ router.post("/user/forgot-password", async (req, res) => {
         secure: true,
         auth: {
           user: "noreply.nam.todolist@gmail.com",
-          pass: "Noreplytodolist2"
+          pass: process.env.NOREPLY_PASSWORD
         }
       });
       let info = await transporter.sendMail({
@@ -227,7 +227,7 @@ router.post("/user/reset-password", async (req, res) => {
         secure: true,
         auth: {
           user: "noreply.nam.todolist@gmail.com",
-          pass: "Noreplytodolist2"
+          pass: process.env.NOREPLY_PASSWORD
         }
       });
       let info = await transporter.sendMail({
