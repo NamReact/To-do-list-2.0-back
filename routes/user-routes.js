@@ -84,11 +84,11 @@ router.post("/user/update", authentification, async (req, res) => {
       user.lastName = lastName;
       user.email = email;
       await user.save();
-      const userReturn = {
+      /*   const userReturn = {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email
-      };
+      }; */
       return res.status(200);
     }
   } catch (error) {
