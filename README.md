@@ -39,15 +39,13 @@ https://todolist-nam-back.herokuapp.com/
 
 ## Features
 
-###Login page###
-
 - Register new user.
 - Check user login informations and return token.
 - Send email to user's email upon successfully creating a new account, changing password.
 - Forgot my password route send an email to the user to change password without having a token on the pc.
 - Create new task.
 
-###Possible improvement###
+### Possible improvement
 
 Add model and route for the project management function
 
