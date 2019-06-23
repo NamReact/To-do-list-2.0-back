@@ -192,7 +192,7 @@ router.post("/user/forgot-password", async (req, res) => {
         text:
           "Hey ! Your password can be reset by clicking the link below. If you did not request a new password, please ignore this email.",
         html:
-          "<p>Hey ! Your password can be reset by clicking the link below. If you did not request a new password, please ignore this email. <br/><br/><a href=`http://localhost:3000/reset/`" +
+          "<p>Hey ! Your password can be reset by clicking the link below. If you did not request a new password, please ignore this email. <br/><br/><a href=`http://todo-list-nam.herokuapp.com/reset/`" +
           user.forgotPasswordToken +
           "/>Reset my password<a><br/><br/>Nam</p>"
       });
